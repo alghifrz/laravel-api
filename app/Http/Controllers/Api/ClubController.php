@@ -15,12 +15,17 @@ class ClubController extends Controller
     public function index()
     {
         $clubs = Club::all();
-
+        return view('clubs.index', compact('clubs'));
         return response()->json([
             'status' => true,
             'message' => 'data berhasil diambil',
             'data' => $clubs
         ]);
+    }
+
+    public function create()
+    {
+        return view('clubs.create');
     }
 
     /**
@@ -57,7 +62,8 @@ class ClubController extends Controller
     public function show(string $id)
     {
         $club = Club::findOrFail($id);
-
+        
+        return view('clubs.show', compact('club'));
         return response()->json([
             'status' => true,
             'message' => 'data berhasil diambil',
@@ -94,6 +100,13 @@ class ClubController extends Controller
         ], 200);
     }
 
+    public function edit(string $id)
+    {
+        $club = Club::findOrFail($id);
+        
+        return view('clubs.edit', compact('club'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -101,10 +114,16 @@ class ClubController extends Controller
     {
         $club = Club::findOrFail($id);
         $club->delete();
-
         return response()->json([
             'status' => true,
             'message' => 'data berhasil dihapus',
         ], 204);
+    }
+
+    public function delete(string $id)
+    {
+        $club = Club::findOrFail($id);
+        
+        return view('clubs.delete', compact('club'));
     }
 }
